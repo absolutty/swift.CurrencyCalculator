@@ -23,7 +23,7 @@ class CustomDropDown: DropDown {
     
     //MARK: nacitanie dat
     private func loadSearchData()  {
-        RequestManager.shared.getCurrencies() { response in
+        OpenExchangeRatesManager.shared.getCurrencies() { response in
             switch response {
             case .success(let currenciesData):
                 //option array tu vystupuje ako pole KEYS ("American dolar", "Euro", ...)

@@ -1,25 +1,25 @@
 import Foundation
 import Alamofire
 
-class RequestManager {
+class OpenExchangeRatesManager {
     //MARK: constants
     static let API_KEY = "461790475cd34270a67a8007a506eaac"
     static let BASE_URL = "https://openexchangerates.org/api"
     
     //MARK: singleton instance of class
-    static let shared = RequestManager()
+    static let shared = OpenExchangeRatesManager()
     
     //MARK: getLatest: zoznam skratiek mien + ich hodnota
     func getLatest(base currency: String, completion: @escaping (Result<LatestResponse, AFError>) -> Void) {
         let request = LatestRequest(
-            appId: RequestManager.API_KEY,
+            appId: OpenExchangeRatesManager.API_KEY,
             base: currency
         )
         
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
             
-        AF.request(RequestManager.BASE_URL + "/latest.json", method: .get, parameters: request)
+        AF.request(OpenExchangeRatesManager.BASE_URL + "/latest.json", method: .get, parameters: request)
             .validate()
             .responseDecodable(of: LatestResponse.self, decoder: decoder) { response in
                 completion(response.result)
@@ -34,8 +34,8 @@ class RequestManager {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         
-        let urlString = RequestManager.BASE_URL + "/convert" + "/\(value)" + "/\(fromCurrency)" + "/\(toCurrency)"
-            + "?app_id=\(RequestManager.API_KEY)"
+        let urlString = OpenExchangeRatesManager.BASE_URL + "/convert" + "/\(value)" + "/\(fromCurrency)" + "/\(toCurrency)"
+            + "?app_id=\(OpenExchangeRatesManager.API_KEY)"
         
         AF.request(urlString, method: .get)
             .validate()
@@ -49,7 +49,7 @@ class RequestManager {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
             
-        AF.request(RequestManager.BASE_URL + "/currencies.json", method: .get)
+        AF.request(OpenExchangeRatesManager.BASE_URL + "/currencies.json", method: .get)
             .validate()
             .responseDecodable(of: [String: String].self, decoder: decoder) { response in
                 completion(response.result)
@@ -58,7 +58,7 @@ class RequestManager {
     
     func getTimeSeries(from fromCurrency: String, to toCurrency: String, completion: @escaping (Result<TimeSeriesResponse, AFError>) -> Void) {
         let request = TimeSeriesRequest(
-            appId: RequestManager.API_KEY,
+            appId: OpenExchangeRatesManager.API_KEY,
             base: fromCurrency,
             start: "2022-05-01",
             end: "2022-05-31",
@@ -68,7 +68,7 @@ class RequestManager {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
             
-        AF.request(RequestManager.BASE_URL + "/time-series.json", method: .get, parameters: request)
+        AF.request(OpenExchangeRatesManager.BASE_URL + "/time-series.json", method: .get, parameters: request)
             .validate()
             .responseDecodable(of: TimeSeriesResponse.self, decoder: decoder) { response in
                 completion(response.result)

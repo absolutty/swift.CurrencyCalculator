@@ -51,7 +51,7 @@ class ExchangeCalculatorController: UIViewController, ChartViewDelegate {
             try testInput()
             self.activityIndicator.startAnimating()
             
-            RequestManager.shared.getConversion(from: txtFieldAbbreviationFrom.text!, to: txtFieldAbbreviationTo.text!, value: Double(txtFieldInput.text!)!){  response in
+            OpenExchangeRatesManager.shared.getConversion(from: txtFieldAbbreviationFrom.text!, to: txtFieldAbbreviationTo.text!, value: Double(txtFieldInput.text!)!){  response in
                 self.activityIndicator.stopAnimating()
                 switch response{
                 case .success(let conversionData):

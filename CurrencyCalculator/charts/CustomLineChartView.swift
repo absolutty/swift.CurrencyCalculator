@@ -14,7 +14,7 @@ class CustomLineChartView : LineChartView {
     
     //MARK: loading chart data using API
     func loadChart(from: String, to: String) {
-        RequestManager.shared.getTimeSeries(from: from, to: to) { response in
+        OpenExchangeRatesManager.shared.getTimeSeries(from: from, to: to) { response in
             switch response{
             case .success(let timeSeriesData):
                 let data = CustomLineChartData()

@@ -16,7 +16,7 @@
 		014A9672285892CC002B362B /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014A9670285892CC002B362B /* DetailController.swift */; };
 		014A9673285892CC002B362B /* DetailController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 014A9671285892CC002B362B /* DetailController.storyboard */; };
 		01533A642849F74E001509F9 /* CustomLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01533A632849F74E001509F9 /* CustomLineChartView.swift */; };
-		015D3A03281EAE6E00EAD565 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015D3A02281EAE6E00EAD565 /* RequestManager.swift */; };
+		015D3A03281EAE6E00EAD565 /* OpenExchangeRatesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015D3A02281EAE6E00EAD565 /* OpenExchangeRatesManager.swift */; };
 		015D3A09281EB25400EAD565 /* LatestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015D3A08281EB25400EAD565 /* LatestRequest.swift */; };
 		015D3A0B281EB26A00EAD565 /* TimeSeriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015D3A0A281EB26A00EAD565 /* TimeSeriesRequest.swift */; };
 		015D3A10281EB95E00EAD565 /* LatestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015D3A0F281EB95E00EAD565 /* LatestResponse.swift */; };
@@ -64,7 +64,7 @@
 		014A9670285892CC002B362B /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		014A9671285892CC002B362B /* DetailController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DetailController.storyboard; sourceTree = "<group>"; };
 		01533A632849F74E001509F9 /* CustomLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLineChartView.swift; sourceTree = "<group>"; };
-		015D3A02281EAE6E00EAD565 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		015D3A02281EAE6E00EAD565 /* OpenExchangeRatesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenExchangeRatesManager.swift; sourceTree = "<group>"; };
 		015D3A08281EB25400EAD565 /* LatestRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestRequest.swift; sourceTree = "<group>"; };
 		015D3A0A281EB26A00EAD565 /* TimeSeriesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSeriesRequest.swift; sourceTree = "<group>"; };
 		015D3A0F281EB95E00EAD565 /* LatestResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestResponse.swift; sourceTree = "<group>"; };
@@ -140,9 +140,7 @@
 		015D3A01281EAE4200EAD565 /* managers */ = {
 			isa = PBXGroup;
 			children = (
-				015D3A02281EAE6E00EAD565 /* RequestManager.swift */,
-				015D3A07281EB23900EAD565 /* requests */,
-				015D3A0E281EB93600EAD565 /* responses */,
+				019E15172EF58D0A00C3F1CE /* openexchangerates */,
 			);
 			path = managers;
 			sourceTree = "<group>";
@@ -247,6 +245,16 @@
 				01A7EBF3284811580019D61A /* ExchangeCalculatorController.storyboard */,
 			);
 			path = exchange;
+			sourceTree = "<group>";
+		};
+		019E15172EF58D0A00C3F1CE /* openexchangerates */ = {
+			isa = PBXGroup;
+			children = (
+				015D3A02281EAE6E00EAD565 /* OpenExchangeRatesManager.swift */,
+				015D3A07281EB23900EAD565 /* requests */,
+				015D3A0E281EB93600EAD565 /* responses */,
+			);
+			path = openexchangerates;
 			sourceTree = "<group>";
 		};
 		01A7EBF6284813F30019D61A /* formatters */ = {
@@ -367,7 +375,7 @@
 				01251C2A28365730004B3428 /* CustomDropDown.swift in Sources */,
 				01B02E522821B24900C15EF1 /* CurrencyRate.swift in Sources */,
 				016E75D8281BFF7600B4BF37 /* ExchangeCalculatorController.swift in Sources */,
-				015D3A03281EAE6E00EAD565 /* RequestManager.swift in Sources */,
+				015D3A03281EAE6E00EAD565 /* OpenExchangeRatesManager.swift in Sources */,
 				015D3A14281EC6A400EAD565 /* CurrencyCell.swift in Sources */,
 				015D3A0B281EB26A00EAD565 /* TimeSeriesRequest.swift in Sources */,
 				01E26FE128495CD500D656BA /* XAxisDateFormatter.swift in Sources */,
