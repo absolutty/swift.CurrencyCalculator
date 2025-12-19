@@ -26,24 +26,6 @@ class OpenExchangeRatesManager {
             }
     }
     
-    //MARK: getConversion: konverzia na zaklade hodnoty
-    //uskutocnena fromCurrency --> toCurrency
-    func getConversion(from fromCurrency: String, to toCurrency: String, value: Double,
-                       completion: @escaping (Result<ConversionResponse, AFError>) -> Void) {
-        
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        
-        let urlString = OpenExchangeRatesManager.BASE_URL + "/convert" + "/\(value)" + "/\(fromCurrency)" + "/\(toCurrency)"
-            + "?app_id=\(OpenExchangeRatesManager.API_KEY)"
-        
-        AF.request(urlString, method: .get)
-            .validate()
-            .responseDecodable(of: ConversionResponse.self, decoder: decoder) { response in
-                completion(response.result)
-            }
-    }
-    
     //MARK: getLatest: zoznam skratiek mien + ich cely nazov
     func getCurrencies(completion: @escaping (Result<[String: String], AFError>) -> Void){
         let decoder = JSONDecoder()

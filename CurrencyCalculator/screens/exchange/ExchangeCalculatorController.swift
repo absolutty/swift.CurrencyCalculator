@@ -51,12 +51,21 @@ class ExchangeCalculatorController: UIViewController, ChartViewDelegate {
             try testInput()
             self.activityIndicator.startAnimating()
             
-            OpenExchangeRatesManager.shared.getConversion(from: txtFieldAbbreviationFrom.text!, to: txtFieldAbbreviationTo.text!, value: Double(txtFieldInput.text!)!){  response in
+            guard let fromCurrency = txtFieldAbbreviationFrom.text,
+                  let toCurrency = txtFieldAbbreviationTo.text,
+                  let valueToConvertText = txtFieldInput.text, let valueToConvert = Double(valueToConvertText)
+            else {
+                return
+            }
+            
+            FrankfurterManager.shared.getConversion(from: fromCurrency, to: toCurrency, value: valueToConvert) {  response in
                 self.activityIndicator.stopAnimating()
                 switch response{
                 case .success(let conversionData):
-                    self.txtFieldOutput.text = "\(ValueFormatter.formatDouble(toBeFormatted: conversionData.response))"
-                    self.chartView.loadChart(from: self.txtFieldAbbreviationFrom.text!, to: self.txtFieldAbbreviationTo.text!)
+                    guard let rate = conversionData.rates[toCurrency] else { return }
+ 
+                    self.txtFieldOutput.text = "\(ValueFormatter.formatDouble(toBeFormatted: (valueToConvert * rate)))"
+                    self.chartView.loadChart(from: fromCurrency, to: toCurrency)
                     
                 case .failure(let error):
                     print(error)
