@@ -1,5 +1,5 @@
 import Foundation
-import Charts
+import DGCharts
 
 class CustomLineChartView : LineChartView {
     //MARK: chart apperance setup

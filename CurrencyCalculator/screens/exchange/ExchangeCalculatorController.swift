@@ -1,7 +1,6 @@
 import UIKit
 import iOSDropDown
-import Charts
-import SwiftUI
+import DGCharts
 
 class ExchangeCalculatorController: UIViewController, ChartViewDelegate {
 //MARK: outlets

@@ -25,7 +25,6 @@
 		01683A6F283383920002AC7F /* CurrenciesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01683A6E283383920002AC7F /* CurrenciesRequest.swift */; };
 		01683A71283383F90002AC7F /* CurrenciesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01683A70283383F90002AC7F /* CurrenciesResponse.swift */; };
 		01683A7328339D0A0002AC7F /* ConversionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01683A7228339D0A0002AC7F /* ConversionResponse.swift */; };
-		016CED7928469CDE00D394E8 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 016CED7828469CDE00D394E8 /* Charts */; };
 		016E75C0281BFDB900B4BF37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E75BF281BFDB900B4BF37 /* AppDelegate.swift */; };
 		016E75C2281BFDB900B4BF37 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E75C1281BFDB900B4BF37 /* SceneDelegate.swift */; };
 		016E75C4281BFDB900B4BF37 /* RatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E75C3281BFDB900B4BF37 /* RatesController.swift */; };
@@ -40,6 +39,7 @@
 		01A7EBF8284814A50019D61A /* ValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A7EBF7284814A50019D61A /* ValueFormatter.swift */; };
 		01A7EBFA284820DC0019D61A /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A7EBF9284820DC0019D61A /* DateFormatter.swift */; };
 		01B02E522821B24900C15EF1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B02E512821B24900C15EF1 /* CurrencyRate.swift */; };
+		01C4753B2EF41434000E1784 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 01C4753A2EF41434000E1784 /* DGCharts */; };
 		01E26FE128495CD500D656BA /* XAxisDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E26FE028495CD500D656BA /* XAxisDateFormatter.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,8 +100,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01C4753B2EF41434000E1784 /* DGCharts in Frameworks */,
 				01251C25283636F2004B3428 /* Alamofire in Frameworks */,
-				016CED7928469CDE00D394E8 /* Charts in Frameworks */,
 				01251C2828363783004B3428 /* iOSDropDown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,7 +288,7 @@
 			packageProductDependencies = (
 				01251C24283636F2004B3428 /* Alamofire */,
 				01251C2728363783004B3428 /* iOSDropDown */,
-				016CED7828469CDE00D394E8 /* Charts */,
+				01C4753A2EF41434000E1784 /* DGCharts */,
 			);
 			productName = CurrencyCalculator;
 			productReference = 016E75BC281BFDB900B4BF37 /* CurrencyCalculator.app */;
@@ -633,8 +633,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -650,10 +650,10 @@
 			package = 01251C2628363783004B3428 /* XCRemoteSwiftPackageReference "iOSDropDown" */;
 			productName = iOSDropDown;
 		};
-		016CED7828469CDE00D394E8 /* Charts */ = {
+		01C4753A2EF41434000E1784 /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 016CED7728469CAF00D394E8 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = Charts;
+			productName = DGCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
