@@ -3,7 +3,7 @@ import Alamofire
 
 class OpenExchangeRatesManager {
     //MARK: constants
-    static let API_KEY = "461790475cd34270a67a8007a506eaac"
+    static let API_KEY = "d0f2316d06f5415190431d78de41d5a6"
     static let BASE_URL = "https://openexchangerates.org/api"
     
     //MARK: singleton instance of class

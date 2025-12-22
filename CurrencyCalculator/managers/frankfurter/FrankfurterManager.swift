@@ -9,14 +9,19 @@ import Foundation
 import Alamofire
 
 class FrankfurterManager {
-    //MARK: constants
-    static let BASE_URL = "https://api.frankfurter.dev/v1"
     
-    //MARK: singleton instance of class
+    private static let BASE_URL = "https://api.frankfurter.dev/v1"
     static let shared = FrankfurterManager()
     
-    //MARK: getConversion: konverzia na zaklade hodnoty
-    //uskutocnena fromCurrency --> toCurrency
+    private var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
     func getConversion(
         from fromCurrency: String,
         to toCurrency: String,
@@ -26,34 +31,36 @@ class FrankfurterManager {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         
-        let urlString = FrankfurterManager.BASE_URL + "/latest?" + "base=\(fromCurrency)" + "&symbols=\(toCurrency)"
+        let endpoint = FrankfurterManager.BASE_URL + "/latest"
+        let request = LatestConversionRequest(base: fromCurrency, symbols: toCurrency)
         
-        AF.request(urlString, method: .get)
+        AF.request(endpoint, method: .get, parameters: request, encoder: URLEncodedFormParameterEncoder.default)
             .validate()
             .responseDecodable(of: ConversionResponse.self, decoder: decoder) { response in
                 completion(response.result)
             }
     }
     
-    func getTimeSeries(from fromCurrency: String, to toCurrency: String, completion: @escaping (Result<TimeSeriesResponse, AFError>) -> Void) {
+    func getTimeSeries(
+        from fromCurrency: String,
+        to toCurrency: String,
+        completion: @escaping (Result<TimeSeriesResponse, AFError>) -> Void
+    ) {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         
-        
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        formatter.dateFormat = "yyyy-MM-dd"
         let start = Date().startOfMonth()
         let end = Date().endOfMonth()
         
-        let urlString = FrankfurterManager.BASE_URL + "/" + formatter.string(from: start) + ".." + formatter.string(from: end) + "?base=\(fromCurrency)" + "&symbols=\(toCurrency)"
-            
-        AF.request(urlString, method: .get)
-            .validate()
-            .responseDecodable(of: TimeSeriesResponse.self, decoder: decoder) { response in
-                completion(response.result)
-            }
+        let dateRangePath = "\(dateFormatter.string(from: start))..\(dateFormatter.string(from: end))"
+        let endpoint = "\(FrankfurterManager.BASE_URL)/\(dateRangePath)"
+        
+        let request = TimeSeriesRequest(base: fromCurrency, symbols: toCurrency)
+        
+        AF.request(endpoint, method: .get, parameters: request, encoder: URLEncodedFormParameterEncoder.default)
+        .validate()
+        .responseDecodable(of: TimeSeriesResponse.self, decoder: decoder) { response in
+            completion(response.result)
+        }
     }
 }
