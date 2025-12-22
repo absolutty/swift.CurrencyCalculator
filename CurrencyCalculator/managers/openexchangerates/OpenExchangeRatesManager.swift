@@ -38,22 +38,4 @@ class OpenExchangeRatesManager {
             }
     }
     
-    func getTimeSeries(from fromCurrency: String, to toCurrency: String, completion: @escaping (Result<TimeSeriesResponse, AFError>) -> Void) {
-        let request = TimeSeriesRequest(
-            appId: OpenExchangeRatesManager.API_KEY,
-            base: fromCurrency,
-            start: "2022-05-01",
-            end: "2022-05-31",
-            symbols: toCurrency
-        )
-        
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-            
-        AF.request(OpenExchangeRatesManager.BASE_URL + "/time-series.json", method: .get, parameters: request)
-            .validate()
-            .responseDecodable(of: TimeSeriesResponse.self, decoder: decoder) { response in
-                completion(response.result)
-            }
-    }
 }

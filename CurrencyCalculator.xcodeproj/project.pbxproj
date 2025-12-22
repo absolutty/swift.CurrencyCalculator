@@ -163,7 +163,6 @@
 			children = (
 				015D3A0F281EB95E00EAD565 /* LatestResponse.swift */,
 				01683A70283383F90002AC7F /* CurrenciesResponse.swift */,
-				018B63542846D62A00399BB8 /* TimeSeriesResponse.swift */,
 			);
 			path = responses;
 			sourceTree = "<group>";
@@ -272,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				019E151C2EF58F9200C3F1CE /* ConversionResponse.swift */,
+				018B63542846D62A00399BB8 /* TimeSeriesResponse.swift */,
 			);
 			path = responses;
 			sourceTree = "<group>";

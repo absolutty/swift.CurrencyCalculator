@@ -28,23 +28,18 @@ class CustomLineChartData : LineChartData {
     func setupData(from: String, to: String, response timeSeriesData: TimeSeriesResponse) {
         format()
         
-        let dayDurationInSeconds: TimeInterval = 60*60*24
-        
-        var values: [ChartDataEntry] = Array()
-        
-        let start = Date().startOfMonth()
-        let end = Date().endOfMonth()
-        
-        var i: Int = 0
-        for date in stride(from: start, to: end, by: dayDurationInSeconds) {
-           let hodnota = timeSeriesData.rates[dateFormatter.string(from: date)]![to]
-            values.append(ChartDataEntry(x: Double(i), y: hodnota!))
-            i += 1
+        let sortedPairs = timeSeriesData.rates.sorted { $0.key < $1.key }
+
+        var entries: [ChartDataEntry] = []
+        entries.reserveCapacity(sortedPairs.count)
+
+        for (index, (_, dayRates)) in sortedPairs.enumerated() {
+            guard let rate = dayRates[to] else { continue }
+            entries.append(ChartDataEntry(x: Double(index), y: rate))
         }
         
-        set.replaceEntries(values)
+        set.replaceEntries(entries)
         set.label = from
-        
         dataSets.append(set)
     }
 }
