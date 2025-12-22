@@ -82,7 +82,7 @@ class RatesController: UIViewController{
     //MARK: LOADING and saving rates
     /// nacita a ulozi data z API (taktiez sa refreshne tableview)
     private func loadRates() {
-        OpenExchangeRatesManager.shared.getCurrencies() { response in
+        FrankfurterManager.shared.getCurrencies() { response in
             switch response {
             case .success(let currenciesData):
                 self.keysArray = Array(currenciesData.keys)

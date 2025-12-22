@@ -26,16 +26,4 @@ class OpenExchangeRatesManager {
             }
     }
     
-    //MARK: getLatest: zoznam skratiek mien + ich cely nazov
-    func getCurrencies(completion: @escaping (Result<[String: String], AFError>) -> Void){
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-            
-        AF.request(OpenExchangeRatesManager.BASE_URL + "/currencies.json", method: .get)
-            .validate()
-            .responseDecodable(of: [String: String].self, decoder: decoder) { response in
-                completion(response.result)
-            }
-    }
-    
 }

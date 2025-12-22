@@ -8,7 +8,7 @@ class SearchData{
     var currenciesFullNames: [String: String] = [:]
     
     private func loadSearchData()  {
-        OpenExchangeRatesManager.shared.getCurrencies() { response in
+        FrankfurterManager.shared.getCurrencies() { response in
             switch response {
             case .success(let currenciesData):
                 self.valuesArray = Array(currenciesData.values)
