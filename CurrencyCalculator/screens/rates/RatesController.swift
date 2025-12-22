@@ -95,7 +95,7 @@ class RatesController: UIViewController{
                     self.curencyRates[key] = currencyRate
                 }
                 
-                OpenExchangeRatesManager.shared.getLatest(base: self.baseCurrency.text!){  response in
+                FrankfurterManager.shared.getLatest(base: self.baseCurrency.text!){  response in
                     self.activityIndicator.stopAnimating()
                     
                     switch response{

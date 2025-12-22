@@ -22,10 +22,16 @@ class FrankfurterManager {
         return formatter
     }()
     
+    func getLatest(
+        base baseCurrency: String,
+        completion: @escaping (Result<ConversionResponse, AFError>) -> Void
+    ) {
+        getConversion(from: baseCurrency, completion: completion)
+    }
+    
     func getConversion(
         from fromCurrency: String,
-        to toCurrency: String,
-        value: Double,
+        to toCurrency: String? = nil,
         completion: @escaping (Result<ConversionResponse, AFError>) -> Void
     ) {
         let decoder = JSONDecoder()

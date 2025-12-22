@@ -7,5 +7,5 @@
 
 struct LatestConversionRequest: Encodable {
     let base: String
-    let symbols: String
+    let symbols: String?
 }

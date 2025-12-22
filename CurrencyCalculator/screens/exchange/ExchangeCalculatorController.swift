@@ -58,7 +58,7 @@ class ExchangeCalculatorController: UIViewController, ChartViewDelegate {
                 return
             }
             
-            FrankfurterManager.shared.getConversion(from: fromCurrency, to: toCurrency, value: valueToConvert) {  response in
+            FrankfurterManager.shared.getConversion(from: fromCurrency, to: toCurrency) {  response in
                 self.activityIndicator.stopAnimating()
                 switch response{
                 case .success(let conversionData):
