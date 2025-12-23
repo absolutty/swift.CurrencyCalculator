@@ -28,7 +28,7 @@ Aplikácia pozostáva z **dvoch** hlavných okien/views kt. sú oddelené (logi
 ## RatesController
 V TabBar-e sa zobrazuje názov **Kurzy**/**Currencies.**
 
-Zobrazuje **170** konverzných kurzov známych svetovo uznávaných mien. 
+Zobrazuje **40** konverzných kurzov známych svetovo uznávaných mien. 
 
 - **z** ktorej meny chceme zobraziť kurzy sa určí v *dropdown-e* 
   „**zvoľ menu**/**choose** **currency**“ 
@@ -135,4 +135,5 @@ Mení sa farba *písma*, farba *ikoniek*, farba jednotlivých *buniek* v kt. zo
 [*https://github.com/danielgindi/Charts*](https://github.com/danielgindi/Charts)
 
 [*https://github.com/jriosdev/iOSDropDown*](https://github.com/jriosdev/iOSDropDown)
+
 
