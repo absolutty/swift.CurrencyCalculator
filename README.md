@@ -3,16 +3,10 @@ Kalkulačka, bude slúžiť na prevod jednotlivých, svetovo uznávaných mien.
 
 Ďalej umožňuje zobraziť menové kurzy jednotlivých mien (+ grafy).
 
-Použité dáta: https://openexchangerates.org.
+Použité dáta: [https://frankfurter.dev/](https://frankfurter.dev/)
 
-- *Open Exchange Rates provides a simple, lightweight and portable JSON API* 
-- *with live and historical foreign exchange (forex) rates for over 200 worldwide* 
-- *and digital currencies, via a simple and easy-to-integrate API, in JSON format.*
-- *Data are tracked and blended algorithmically from multiple reliable sources,* 
-- *ensuring fair and unbiased consistency*
-
-Toto API som už dávnejšie použil na iný predmet, dá sa vybaviť zadarmo API ID ak 
-som študent.
+- **Frankfurter** is a free, open-source currency data API*
+- *It tracks reference exchange rates published by institutional and non-commercial sources like the European Central Bank*
 
 # **Popis implementácie**
 Pri návrhu aplikácie bola použitá architektúra **MVC** ® **M**odel – **V**iew – **C**ontroller. Jedná sa o pomerne *jednoduchú* ale robustnú a užitočnú architektúru.
@@ -135,5 +129,6 @@ Mení sa farba *písma*, farba *ikoniek*, farba jednotlivých *buniek* v kt. zo
 [*https://github.com/danielgindi/Charts*](https://github.com/danielgindi/Charts)
 
 [*https://github.com/jriosdev/iOSDropDown*](https://github.com/jriosdev/iOSDropDown)
+
 
 
