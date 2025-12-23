@@ -5,43 +5,43 @@ import DGCharts
 class ExchangeCalculatorController: UIViewController, ChartViewDelegate {
 //MARK: outlets
     //MARK: fromCurrency
-    @IBOutlet weak var dropDownFrom: CustomDropDown!
-    @IBOutlet weak var txtFieldAbbreviationFrom: UITextField!
+    @IBOutlet weak var dropDownFrom: CustomDropDown?
+    @IBOutlet weak var txtFieldAbbreviationFrom: UITextField?
     
     //MARK: toCurrency
-    @IBOutlet weak var dropDownTo: CustomDropDown!
-    @IBOutlet weak var txtFieldAbbreviationTo: UITextField!
+    @IBOutlet weak var dropDownTo: CustomDropDown?
+    @IBOutlet weak var txtFieldAbbreviationTo: UITextField?
     
     //MARK: calculate
-    @IBOutlet weak var txtFieldInput: UITextField!
-    @IBOutlet weak var txtFieldOutput: UITextField!
-    @IBOutlet weak var btnCalculate: UIImageView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var txtFieldInput: UITextField?
+    @IBOutlet weak var txtFieldOutput: UITextField?
+    @IBOutlet weak var btnCalculate: UIImageView?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
     //MARK: chart view
-    @IBOutlet weak var chartView: CustomLineChartView!
+    @IBOutlet weak var chartView: CustomLineChartView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //vytvaranie tapGesture pre vypocet kurzu
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ExchangeCalculatorController.convertTappedButton(gesture:)))
-        btnCalculate.addGestureRecognizer(tapGesture)
-        btnCalculate.isUserInteractionEnabled = true
+        btnCalculate?.addGestureRecognizer(tapGesture)
+        btnCalculate?.isUserInteractionEnabled = true
         
-        self.txtFieldInput.addTarget(self, action: #selector(ExchangeCalculatorController.inputDidChange(_:)), for: .editingChanged)
+        self.txtFieldInput?.addTarget(self, action: #selector(ExchangeCalculatorController.inputDidChange(_:)), for: .editingChanged)
 
-        dropDownFrom.didSelect{ (selectedText , index ,id) in
-            self.txtFieldAbbreviationFrom.text = self.dropDownFrom.getAbbreviation(of: selectedText)
-            self.txtFieldOutput.text = ""
+        dropDownFrom?.didSelect{ (selectedText , index ,id) in
+            self.txtFieldAbbreviationFrom?.text = self.dropDownFrom?.getAbbreviation(of: selectedText)
+            self.txtFieldOutput?.text = ""
         }
         
-        dropDownTo.didSelect{ (selectedText , index ,id) in
-            self.txtFieldAbbreviationTo.text = self.dropDownTo.getAbbreviation(of: selectedText)
-            self.txtFieldOutput.text = ""
+        dropDownTo?.didSelect{ (selectedText , index ,id) in
+            self.txtFieldAbbreviationTo?.text = self.dropDownTo?.getAbbreviation(of: selectedText)
+            self.txtFieldOutput?.text = ""
         }
         
-        chartView.setChartAppearance()
+        chartView?.setChartAppearance()
     }
 
     
@@ -49,23 +49,23 @@ class ExchangeCalculatorController: UIViewController, ChartViewDelegate {
     @objc func convertTappedButton(gesture: UIGestureRecognizer) {
         do {
             try testInput()
-            self.activityIndicator.startAnimating()
+            self.activityIndicator?.startAnimating()
             
-            guard let fromCurrency = txtFieldAbbreviationFrom.text,
-                  let toCurrency = txtFieldAbbreviationTo.text,
-                  let valueToConvertText = txtFieldInput.text, let valueToConvert = Double(valueToConvertText)
+            guard let fromCurrency = txtFieldAbbreviationFrom?.text,
+                  let toCurrency = txtFieldAbbreviationTo?.text,
+                  let valueToConvertText = txtFieldInput?.text, let valueToConvert = Double(valueToConvertText)
             else {
                 return
             }
             
             FrankfurterManager.shared.getConversion(from: fromCurrency, to: toCurrency) {  response in
-                self.activityIndicator.stopAnimating()
+                self.activityIndicator?.stopAnimating()
                 switch response{
                 case .success(let conversionData):
                     guard let rate = conversionData.rates[toCurrency] else { return }
  
-                    self.txtFieldOutput.text = "\(ValueFormatter.formatDouble(toBeFormatted: (valueToConvert * rate)))"
-                    self.chartView.loadChart(from: fromCurrency, to: toCurrency)
+                    self.txtFieldOutput?.text = "\(ValueFormatter.formatDouble(toBeFormatted: (valueToConvert * rate)))"
+                    self.chartView?.loadChart(from: fromCurrency, to: toCurrency)
                     
                 case .failure(let error):
                     print(error)
@@ -86,25 +86,25 @@ class ExchangeCalculatorController: UIViewController, ChartViewDelegate {
     
     //MARK: overenie správnosti zadania vstupu
     private func testInput() throws {
-        guard let notEmpty = txtFieldInput.text, !notEmpty.isEmpty else {
+        guard let notEmpty = txtFieldInput?.text, !notEmpty.isEmpty else {
             throw InputErrorTypes.prazdnyInput("Nezadal si hodnotu na konverziu!")
         }
-        guard let isNumber = txtFieldInput.text, Double(isNumber) != nil else {
+        guard let isNumber = txtFieldInput?.text, Double(isNumber) != nil else {
             throw InputErrorTypes.nieJeNumber("Nezadal si cislo na konverziu!")
         }
-        guard let greaterThanZero = txtFieldInput.text, Double(greaterThanZero)! >= 0 else {
+        guard let greaterThanZero = txtFieldInput?.text, Double(greaterThanZero)! >= 0 else {
             throw InputErrorTypes.zaporneCislo("Nemozes konvertovat zaporne cisla!")
         }
-        guard let fromNezadane = txtFieldAbbreviationFrom.text, !fromNezadane.isEmpty else {
+        guard let fromNezadane = txtFieldAbbreviationFrom?.text, !fromNezadane.isEmpty else {
             throw InputErrorTypes.nezadaneFromAleboTo("Nezadal si menu Z ktorej chces konvertovat!")
         }
-        guard let toNezadane = txtFieldAbbreviationTo.text, !toNezadane.isEmpty else {
+        guard let toNezadane = txtFieldAbbreviationTo?.text, !toNezadane.isEmpty else {
             throw InputErrorTypes.nezadaneFromAleboTo("Nezadal si menu DO ktorej chces konvertovat!")
         }
     }
     
     //MARK: listener zmeny input textu
     @objc func inputDidChange(_ textField: UITextField) {
-        txtFieldOutput.text = ""
+        txtFieldOutput?.text = ""
     }
 }

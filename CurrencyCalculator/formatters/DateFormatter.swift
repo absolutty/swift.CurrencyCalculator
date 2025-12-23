@@ -28,13 +28,13 @@ extension Date {
         var components = DateComponents()
                 components.month = -1
                 components.day = 1
-        return Calendar(identifier: .gregorian).date(byAdding: components, to: endOfMonth())!
+        return Calendar(identifier: .gregorian).date(byAdding: components, to: endOfMonth()) ?? self
     }
     
     func endOfMonth() -> Date {
         let calendar = Calendar(identifier: .gregorian)
         let components = calendar.dateComponents([.year, .month], from: self)
 
-        return calendar.date(from: components)!
+        return calendar.date(from: components) ?? self
     }
 }

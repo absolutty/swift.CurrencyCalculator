@@ -41,6 +41,6 @@ class CustomDropDown: DropDown {
     
     //MARK: get skratku meny na zaklade jej nazvu
     public func getAbbreviation(of fullName: String) -> String {
-        return currencies[fullName]!
+        return currencies[fullName] ?? ""
     }
 }

@@ -7,11 +7,11 @@ class RatesController: UIViewController{
     var filteredKeysArray = Array<String>() //skratky su VYFILTROVANE
     
     //MARK: outlets
-    @IBOutlet weak var baseCurrency: UILabel!
-    @IBOutlet weak var chooseDropDown: CustomDropDown!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var ratesTableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var baseCurrency: UILabel?
+    @IBOutlet weak var chooseDropDown: CustomDropDown?
+    @IBOutlet weak var searchBar: UISearchBar?
+    @IBOutlet weak var ratesTableView: UITableView?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     
     /// Funkcia sa spusta pri loadovani View-u.
     ///    - spustenie indikatora nacitavania
@@ -22,27 +22,28 @@ class RatesController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicator.startAnimating()
+        activityIndicator?.startAnimating()
         
         //nastavovanie defaultnych hodnot 
-        baseCurrency.text = loadLatestRate()
-        chooseDropDown.text = curencyRates[baseCurrency.text!]?.fullName
+        baseCurrency?.text = loadLatestRate()
+        chooseDropDown?.text = curencyRates[baseCurrency?.text ?? ""]?.fullName
         
         loadRates()
         
         //listener na ZMENU zvolenej meny
-        chooseDropDown.didSelect{ (selectedText , index ,id) in
-            self.baseCurrency.text = self.chooseDropDown.getAbbreviation(of: selectedText)
+        chooseDropDown?.didSelect{ (selectedText , index ,id) in
+            self.baseCurrency?.text = self.chooseDropDown?.getAbbreviation(of: selectedText)
             self.loadRates()
             self.storeLatestRate()
         }
         
         //outlet delegations
-        searchBar.delegate = self
-        ratesTableView.dataSource = self
-        ratesTableView.register(UINib(nibName: CurrencyCell.classString, bundle: nil),
-                           forCellReuseIdentifier: CurrencyCell.classString)
-        
+        searchBar?.delegate = self
+        ratesTableView?.dataSource = self
+        ratesTableView?.register(
+            UINib(nibName: CurrencyCell.classString, bundle: nil),
+            forCellReuseIdentifier: CurrencyCell.classString
+        )
     }
     
     //MARK: LOADING latest used rate
@@ -66,7 +67,8 @@ class RatesController: UIViewController{
     //MARK: SAVING latest used rate
     /// Ulozi do UserDefaults poslednu zvolenu menu.
     private func storeLatestRate() {
-        let keyToBeSaved = StoreRateKey(key: self.baseCurrency.text!)
+        guard let baseCurrencyText = self.baseCurrency?.text else { return }
+        let keyToBeSaved = StoreRateKey(key: baseCurrencyText)
         let keys = [keyToBeSaved]
 
         do {
@@ -90,13 +92,14 @@ class RatesController: UIViewController{
                 
                 //cyklus, kt. vytvara objekty typu CurrencyRate a nastavuje im fullname
                 for key in self.keysArray {
+                    guard let currencyFullName = currenciesData[key] else { continue }
                     var currencyRate = CurrencyRate()
-                    currencyRate.fullName = currenciesData[key]!
+                    currencyRate.fullName = currencyFullName
                     self.curencyRates[key] = currencyRate
                 }
                 
-                FrankfurterManager.shared.getLatest(base: self.baseCurrency.text!){  response in
-                    self.activityIndicator.stopAnimating()
+                FrankfurterManager.shared.getLatest(base: self.baseCurrency?.text ?? ""){  response in
+                    self.activityIndicator?.stopAnimating()
                     
                     switch response{
                     case .success(let latestData):
@@ -111,7 +114,7 @@ class RatesController: UIViewController{
                             }
                         }
                         self.filteredKeysArray = self.keysArray
-                        self.ratesTableView.reloadData()
+                        self.ratesTableView?.reloadData()
                                    
                     case .failure(let error):
                         print(error)
@@ -131,20 +134,20 @@ extension RatesController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let ratesCell =
-                tableView.dequeueReusableCell(withIdentifier:
-                    CurrencyCell.classString, for: indexPath) as? CurrencyCell else {
-                        return UITableViewCell()
-        }
-        
         let currentKey = self.filteredKeysArray[indexPath.row]
-        let currenRate : CurrencyRate = self.curencyRates[currentKey]!
+        guard let ratesCell = tableView.dequeueReusableCell(
+            withIdentifier: CurrencyCell.classString,
+            for: indexPath
+        ) as? CurrencyCell,
+              let currentRate = self.curencyRates[currentKey]
+        else {
+            return UITableViewCell()
+        }
 
-        ratesCell.setupCell(abbreviation: currentKey, value: currenRate.value)
+        ratesCell.setupCell(abbreviation: currentKey, value: currentRate.value)
         ratesCell.actionBlock = {
             self.cellOnClicked(currencyAbbreviation: self.filteredKeysArray[indexPath.row])
         }
-        
         
         return ratesCell
     }
@@ -152,10 +155,18 @@ extension RatesController : UITableViewDataSource, UITableViewDelegate {
     //cell with currencyAbbreviation was clicked
     private func cellOnClicked(currencyAbbreviation: String) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "DetailController", bundle: nil)
-        let detailController = storyBoard.instantiateViewController(withIdentifier: "id-detail") as! DetailController
-        detailController.setupDetail(fullNameFrom: self.curencyRates[currencyAbbreviation]!.fullName,
-                                     abbreviationFrom: currencyAbbreviation,
-                                     abbreviationTo: self.baseCurrency.text!)
+        guard let currencyFullName = self.curencyRates[currencyAbbreviation]?.fullName,
+              let currencyAbbreviationTo = self.baseCurrency?.text,
+              let detailController = storyBoard.instantiateViewController(withIdentifier: "id-detail") as? DetailController
+        else {
+            return
+        }
+        
+        detailController.setupDetail(
+            fullNameFrom: currencyFullName,
+            abbreviationFrom: currencyAbbreviation,
+            abbreviationTo: currencyAbbreviationTo
+        )
         
         self.present(detailController, animated: true, completion: nil)
     }
@@ -176,6 +187,6 @@ extension RatesController : UISearchBarDelegate {
             self.filteredKeysArray = self.keysArray
         }
         
-        self.ratesTableView.reloadData()
+        self.ratesTableView?.reloadData()
     }
 }
